@@ -45,6 +45,7 @@ dependencies {
     testImplementation ("com.squareup.okhttp3:mockwebserver:4.9.1")
 
 
+
     implementation("com.squareup.picasso:picasso:2.71828")
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -59,7 +60,8 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
     implementation ("androidx.activity:activity-ktx:1.2.3")
-
+    implementation("androidx.navigation:navigation-fragment-ktx:2.8.3")
+    implementation("androidx.navigation:navigation-ui-ktx:2.8.3")
 
 
     implementation(libs.androidx.core.ktx)

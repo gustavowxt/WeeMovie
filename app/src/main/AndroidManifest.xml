@@ -29,7 +29,7 @@
             android:exported="false"/>
 
         <!-- tela principal home do app -->
-        <activity android:name=".HomeActivity"
+        <activity android:name=".MainActivity"
             android:exported="true"/>
 
     </application>

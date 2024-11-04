@@ -7,7 +7,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.weemovie.Product
 import com.example.weemovie.R
 import com.squareup.picasso.Picasso
@@ -16,6 +15,8 @@ class ProductAdapter(
     private var products: List<Product>,
     private val onAddToCartClicked: (Product) -> Unit
 ) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+
+    private val cartCounts = mutableMapOf<Product, Int>()
 
     inner class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.productTitle)
@@ -28,11 +29,28 @@ class ProductAdapter(
             price.text = "R$ ${product.price}"
             Picasso.get().load(product.image).into(image)
 
+            // Define o estado do botão com base na quantidade
+            val count = cartCounts[product] ?: 0
+            updateButtonState(count)
+
             addToCartButton.setOnClickListener {
+                val newCount = if (count == 0) 1 else 0
+                cartCounts[product] = newCount
                 onAddToCartClicked(product)
+                updateButtonState(newCount)
+            }
+        }
+
+        private fun updateButtonState(count: Int) {
+            if (count > 0) {
                 addToCartButton.apply {
-                    text = "✓ Adicionado"
+                    text = "✓ Adicionado ($count)"
                     setBackgroundColor(itemView.context.getColor(R.color.green))
+                }
+            } else {
+                addToCartButton.apply {
+                    text = "Adicionar ao Carrinho"
+                    setBackgroundColor(itemView.context.getColor(R.color.default_button_color))
                 }
             }
         }
@@ -49,10 +67,9 @@ class ProductAdapter(
 
     override fun getItemCount() = products.size
 
-    // Método para atualizar a lista de produtos
     fun updateProducts(newProducts: List<Product>) {
         products = newProducts
         notifyDataSetChanged()
     }
-
 }
+
