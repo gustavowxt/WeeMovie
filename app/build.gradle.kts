@@ -41,6 +41,10 @@ android {
 
 dependencies {
 
+    // Dependencia para simular uma API local
+    testImplementation ("com.squareup.okhttp3:mockwebserver:4.9.1")
+
+
     implementation("com.squareup.picasso:picasso:2.71828")
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

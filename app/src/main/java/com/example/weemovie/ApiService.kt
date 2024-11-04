@@ -1,9 +1,16 @@
 package com.example.weemovie
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
 import retrofit2.Call
 import retrofit2.http.GET
+
+interface ApiService {
+    @GET("movies")
+    fun getMovies(): Call<ProductResponse>
+}
+
+data class ProductResponse(
+    val products: List<Product>
+)
 
 
 data class Product(
@@ -14,12 +21,6 @@ data class Product(
 )
 
 
-data class ProductResponse(
-    val products: List<Product>
-)
 
-interface ApiService {
-    @GET("movies")
-    fun getMovies(): Call<ProductResponse>
-}
+
 
