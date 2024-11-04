@@ -1,22 +1,12 @@
 package com.example.weemovie
 
-import CartActivity
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weemovie.Adapter.ProductAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
-import com.seu.pacote.network.RetrofitInstance
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class HomeActivity : AppCompatActivity() {
 
@@ -62,21 +52,17 @@ class HomeActivity : AppCompatActivity() {
 
     // Função para buscar produtos da API e atualizar o adapter
     private fun fetchProducts() {
-        RetrofitInstance.api.getMovies().enqueue(object : Callback<ProductResponse> {
-            override fun onResponse(call: Call<ProductResponse>, response: Response<ProductResponse>) {
-                if (response.isSuccessful) {
-                    val products = response.body()?.products ?: emptyList()
-                    adapter.updateProducts(products) // Atualiza a lista de produtos no adapter
-                } else {
-                    Log.e("HomeActivity", "Erro na resposta: ${response.errorBody()}")
-                }
-            }
+        // Dados fictícios para teste
+        val mockProducts = listOf(
+            Product(1, "Viúva Negra", 9.99, "https://wefit-react-web-test.s3.amazonaws.com/viuva-negra.png"),
+            Product(2, "Shang-chi", 30.99, "https://wefit-react-web-test.s3.amazonaws.com/shang-chi.png"),
+            Product(3, "Homem Aranha", 29.9, "https://wefit-react-web-test.s3.amazonaws.com/spider-man.png"),
+            Product(4, "Morbius", 1.5, "https://wefit-react-web-test.s3.amazonaws.com/morbius-1.png"),
+            Product(5, "Batman", 21.9, "https://wefit-react-web-test.s3.amazonaws.com/the-batman.png"),
+            Product(6, "Eternos", 17.9, "https://wefit-react-web-test.s3.amazonaws.com/eternals.png")
+        )
 
-            override fun onFailure(call: Call<ProductResponse>, t: Throwable) {
-                Log.e("HomeActivity", "Erro ao buscar produtos: ${t.message}")
-                Toast.makeText(this@HomeActivity, "Não foi possível carregar os produtos. Tente novamente mais tarde.", Toast.LENGTH_SHORT).show()
-            }
-        })
+        adapter.updateProducts(mockProducts) // Atualiza o adapter com os dados locais
     }
 }
 
