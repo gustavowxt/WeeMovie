@@ -8,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weemovie.Adapter.CartAdapter
+import com.example.weemovie.ViewModel.CartViewModel
 
 class CartFragment : Fragment() {
 
@@ -18,6 +20,8 @@ class CartFragment : Fragment() {
     private lateinit var cartAdapter: CartAdapter
     private lateinit var finalizeOrderButton: Button
     private lateinit var totalTextView: TextView
+
+    private val cartViewModel: CartViewModel by activityViewModels()  // ViewModel compartilhada
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,28 +35,29 @@ class CartFragment : Fragment() {
         finalizeOrderButton = view.findViewById(R.id.finalizeOrderButton)
         totalTextView = view.findViewById(R.id.totalTextView)
 
-        cartAdapter = CartAdapter(mutableListOf()) { product, quantity ->
+        // Inicia o adapter com os itens do carrinho observando o ViewModel
+        cartAdapter = CartAdapter(mutableListOf()) { product, _ ->
+            cartViewModel.updateCart(product)  // Atualiza o carrinho ao remover um item
             updateTotal()
         }
         recyclerView.adapter = cartAdapter
 
+        // Observa as mudanças nos itens do carrinho
+        cartViewModel.cartItems.observe(viewLifecycleOwner) { cartItems ->
+            cartAdapter.updateCartItems(cartItems) // Atualiza o adapter com os itens e quantidades do carrinho
+            updateTotal()  // Atualiza o total
+        }
+
         finalizeOrderButton.setOnClickListener {
-            // Lógica para finalizar pedido e ir para a tela de confirmação
             val intent = Intent(activity, OrderConfirmationActivity::class.java)
             startActivity(intent)
         }
 
-        updateTotal()
         return view
     }
 
     private fun updateTotal() {
         val total = cartAdapter.getTotalPrice()
         totalTextView.text = "R$ %.2f".format(total)
-    }
-
-    fun updateCart(product: Product) {
-        cartAdapter.updateCart(product)
-        updateTotal()
     }
 }
