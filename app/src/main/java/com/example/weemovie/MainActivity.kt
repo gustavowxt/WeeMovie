@@ -3,6 +3,7 @@ package com.example.weemovie
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -16,21 +17,23 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // Configura o NavController para o BottomNavigationView
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
+        val navController = findNavController(R.id.nav_host_fragment)
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNavigationView.setupWithNavController(navController)
     }
 
     fun updateCart(product: Product) {
         if (cartItems.containsKey(product)) {
+            // Se o produto já está no carrinho, removemos ele
             cartItems.remove(product)
             Toast.makeText(this, "${product.title} removido do carrinho", Toast.LENGTH_SHORT).show()
         } else {
+            // Caso contrário, adicionamos o produto ao carrinho com quantidade inicial de 1
             cartItems[product] = 1
             Toast.makeText(this, "${product.title} adicionado ao carrinho", Toast.LENGTH_SHORT).show()
         }
+
+        // Atualiza o ícone do carrinho e o contadorBottomNavigationView
         updateCartBadge()
     }
 
