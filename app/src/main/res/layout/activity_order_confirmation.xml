@@ -1,34 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
-
-    <ImageView
-        android:id="@+id/empty_state_image_order_confirmation"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
-        android:src="@drawable/ic_launcher_background" />
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@android:color/white"
+    android:padding="16dp">
 
     <TextView
-        android:id="@+id/empty_state_text_order_confirmation"
+        android:id="@+id/orderConfirmationMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Compra realizada com sucesso"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:layout_below="@id/empty_state_image_order_confirmation"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp" />
+        android:text="Compra Realizada com Sucesso!"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:paddingBottom="24dp" />
 
     <Button
         android:id="@+id/backToHomeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Voltar à home"
-        android:layout_below="@id/empty_state_text_order_confirmation"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp" />
-</RelativeLayout>
+        android:text="Voltar para Home"
+        android:backgroundTint="@color/blue"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:onClick="onBackToHomeClicked"/>
+</LinearLayout>

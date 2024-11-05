@@ -4,32 +4,53 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weemovie.Product
 import com.example.weemovie.R
+import com.squareup.picasso.Picasso
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class CartAdapter(
-    private var cartItems: MutableList<Product>,
+    private var cartItems: List<Pair<Product, Int>>,
     private val onQuantityChanged: (Product, Int) -> Unit
 ) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
-    private val cartCounts = mutableMapOf<Product, Int>()  // Mapa para armazenar produtos e suas quantidades
-
     inner class CartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val title: TextView = itemView.findViewById(R.id.cartItemTitle)
-        val quantity: TextView = itemView.findViewById(R.id.cartItemQuantity)
-        val price: TextView = itemView.findViewById(R.id.cartItemPrice)
-        val removeButton: Button = itemView.findViewById(R.id.cartItemRemoveButton)
+        val productImage: ImageView = itemView.findViewById(R.id.productImage)
+        val productTitle: TextView = itemView.findViewById(R.id.productTitle)
+        val dateAdded: TextView = itemView.findViewById(R.id.dateAdded)
+        val quantityText: TextView = itemView.findViewById(R.id.quantityText)
+        val productSubtotal: TextView = itemView.findViewById(R.id.productSubtotal)
+        val increaseQuantity: Button = itemView.findViewById(R.id.increaseQuantity)
+        val decreaseQuantity: Button = itemView.findViewById(R.id.decreaseQuantity)
 
-        fun bind(product: Product) {
-            val productQuantity = cartCounts[product] ?: 1
-            title.text = product.title
-            quantity.text = productQuantity.toString()
-            price.text = "R$ %.2f".format(product.price * productQuantity)
+        fun bind(cartItem: Pair<Product, Int>) {
+            val (product, quantity) = cartItem
 
-            removeButton.setOnClickListener {
-                removeProduct(product)
+            // Carrega imagem do produto com Picasso
+            Picasso.get().load(product.image).into(productImage)
+
+            // Preenche título e subtotal do produto
+            productTitle.text = product.title
+            dateAdded.text = "Adicionado em ${getCurrentDate()}"
+            quantityText.text = quantity.toString()
+            productSubtotal.text = "R$ %.2f".format(product.price * quantity)
+
+            // Incrementa e decrementa a quantidade
+            increaseQuantity.setOnClickListener {
+                onQuantityChanged(product, quantity + 1)
+            }
+
+            decreaseQuantity.setOnClickListener {
+                if (quantity > 1) {
+                    onQuantityChanged(product, quantity - 1)
+                } else {
+                    onQuantityChanged(product, 0)  // Remove do carrinho
+                }
             }
         }
     }
@@ -45,46 +66,15 @@ class CartAdapter(
 
     override fun getItemCount() = cartItems.size
 
-    /**
-     * Atualiza o conteúdo do adapter com uma nova lista de produtos e suas quantidades.
-     */
-    fun updateCartItems(newCartItems: Map<Product, Int>) {
-        cartItems.clear()
-        cartItems.addAll(newCartItems.keys)
-        cartCounts.clear()
-        cartCounts.putAll(newCartItems)
+    fun updateCartItems(newCartItems: List<Pair<Product, Int>>) {
+        cartItems = newCartItems
         notifyDataSetChanged()
     }
 
-    /**
-     * Adiciona um produto ao carrinho ou aumenta sua quantidade, se ele já estiver no carrinho.
-     */
-    fun updateCart(product: Product) {
-        if (cartCounts.containsKey(product)) {
-            cartCounts[product] = (cartCounts[product] ?: 0) + 1
-        } else {
-            cartItems.add(product)
-            cartCounts[product] = 1
-        }
-        onQuantityChanged(product, cartCounts[product] ?: 1)
-        notifyDataSetChanged()
-    }
-
-    /**
-     * Remove um produto do carrinho.
-     */
-    private fun removeProduct(product: Product) {
-        cartCounts.remove(product)
-        cartItems.remove(product)
-        onQuantityChanged(product, 0)
-        notifyDataSetChanged()
-    }
-
-    /**
-     * Calcula o preço total do carrinho.
-     */
-    fun getTotalPrice(): Double {
-        return cartItems.sumOf { it.price * (cartCounts[it] ?: 1) }
+    private fun getCurrentDate(): String {
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        return dateFormat.format(Date())
     }
 }
+
 
