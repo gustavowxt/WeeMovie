@@ -1,49 +1,54 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white"
-    android:padding="16dp"
-    tools:context=".CartFragment">
+    android:padding="16dp">
 
-    <TextView
-        android:id="@+id/cartHeader"
-        android:layout_width="wrap_content"
+    <!-- Layout para o carrinho vazio -->
+    <LinearLayout
+        android:id="@+id/emptyCartLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Carrinho de compras"
-        android:textSize="20sp"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"
-        android:paddingBottom="16dp" />
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="500dp"
+            android:layout_height="500dp"
+            android:src="@drawable/empty_cart_image" />
+
+        <Button
+            android:id="@+id/backToHomeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Voltar à Home" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCart"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingBottom="16dp" />
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/totalPriceText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TOTAL R$ 0,00"
-        android:textSize="18sp"
-        android:textColor="@android:color/white"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="16dp" />
+        android:text="TOTAL R$ 0.00"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:visibility="gone"
+        android:layout_marginBottom="8dp"/>
 
     <Button
         android:id="@+id/finalizeOrderButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="FINALIZAR PEDIDO"
-        android:textColor="@android:color/white"
-        android:backgroundTint="@color/blue"
-        android:textStyle="bold" />
+        android:text="Finalizar Pedido"
+        android:visibility="gone" />
+
 </LinearLayout>
