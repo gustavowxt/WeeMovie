@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="8dp"
-    android:background="?android:attr/selectableItemBackground">
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/productImage"
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:text="Adicionar ao carrinho"
         android:textColor="#FFFFFF"
-        android:backgroundTint="?attr/colorPrimary"
+        android:backgroundTint="@color/blue"
         android:padding="8dp" />
 
 </LinearLayout>

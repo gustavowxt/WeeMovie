@@ -6,15 +6,18 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.weemovie.Product
 import com.example.weemovie.R
 import com.squareup.picasso.Picasso
 
 class ProductAdapter(
     private var products: List<Product>,
-    private val onAddToCartClicked: (Product) -> Unit
+    private val onProductToggle: (Product) -> Boolean,       // Alterna o filme no carrinho
+    private val isProductInCart: (Product) -> Boolean,       // Verifica se o filme está no carrinho
+    private val getProductQuantity: (Product) -> Int         // A quantidade do filme no carrinho
 ) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     inner class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -28,12 +31,33 @@ class ProductAdapter(
             price.text = "R$ ${product.price}"
             Picasso.get().load(product.image).into(image)
 
+            // Define o estado inicial do botão com base no carrinho
+            val isAdded = isProductInCart(product)
+            updateButtonState(isAdded, getProductQuantity(product))
+
             addToCartButton.setOnClickListener {
-                onAddToCartClicked(product)
-                addToCartButton.apply {
-                    text = "✓ Adicionado"
-                    setBackgroundColor(itemView.context.getColor(R.color.green))
+                val added = onProductToggle(product)
+                updateButtonState(added, getProductQuantity(product))
+                val message = if (added) {
+                    "${product.title} adicionado ao carrinho"
+                } else {
+                    "${product.title} removido do carrinho"
                 }
+                Toast.makeText(itemView.context, message, Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        private fun updateButtonState(isAdded: Boolean, quantity: Int) {
+            if (isAdded) {
+                addToCartButton.text = "Adicionado ($quantity)"
+                addToCartButton.setBackgroundColor(
+                    ContextCompat.getColor(itemView.context, R.color.green)
+                )
+            } else {
+                addToCartButton.text = "Adicionar ao carrinho"
+                addToCartButton.setBackgroundColor(
+                    ContextCompat.getColor(itemView.context, R.color.default_button_color)
+                )
             }
         }
     }
@@ -49,10 +73,10 @@ class ProductAdapter(
 
     override fun getItemCount() = products.size
 
-    // Método para atualizar a lista de produtos
     fun updateProducts(newProducts: List<Product>) {
         products = newProducts
         notifyDataSetChanged()
     }
-
 }
+
+

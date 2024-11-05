@@ -2,8 +2,9 @@ package com.example.weemovie
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.coroutines.*
 
 class SplashActivity : AppCompatActivity() {
 
@@ -11,11 +12,9 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        // o tempo de exibição da splash em milisegundos
-        CoroutineScope(Dispatchers.Main).launch {
-            delay(2000)
-            startActivity(Intent(this@SplashActivity, LoadingActivity::class.java))
-            finish()
-        }
+        Handler(Looper.getMainLooper()).postDelayed({
+            startActivity(Intent(this, LoadingActivity::class.java))
+            finish() // Fecha a SplashActivity
+        }, 2000) // Aguarda 2 segundos, ajuste conforme necessário
     }
 }
