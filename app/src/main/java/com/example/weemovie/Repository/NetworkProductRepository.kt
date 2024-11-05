@@ -17,12 +17,12 @@ class NetworkProductRepository : ProductRepository {
                     val products = response.body()?.products ?: emptyList()
                     callback(products)
                 } else {
-                    callback(emptyList()) // Caso de resposta com erro
+                    callback(emptyList())
                 }
             }
 
             override fun onFailure(call: Call<ProductResponse>, t: Throwable) {
-                callback(emptyList()) // Em caso de falha de rede
+                callback(emptyList())
             }
         })
     }

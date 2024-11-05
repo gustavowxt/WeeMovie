@@ -19,12 +19,10 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        // Configura o BottomNavigationView e o NavController
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
 
-        // Configura o BottomNavigationView com o NavController
         bottomNavigationView.setupWithNavController(navController)
     }
 
@@ -34,13 +32,13 @@ class HomeActivity : AppCompatActivity() {
         menuItem.title = "Carrinho ($count)"
     }
 
-    // Adiciona um item ao carrinho e exibe feedback
+    // Adiciona um item ao carrinho e exibe na tela
     fun addToCart(product: Product) {
         if (!cartItems.contains(product)) {
             cartItems.add(product)
             updateCartBadge(cartItems.size) // Atualiza o contador do carrinho
 
-            // Exibe mensagem de feedback para o usuário
+            // Exibe mensagem na tela para o usuário
             Snackbar.make(
                 findViewById(android.R.id.content),
                 "${product.title} adicionado ao carrinho!",

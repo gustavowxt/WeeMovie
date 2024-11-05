@@ -4,16 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity">
+    tools:context=".HomeActivity"
+    android:background="#2F2F46">>
 
-    <!-- FragmentContainerView para carregar as Fragments dinamicamente -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:navGraph="@navigation/nav_graph"
         app:defaultNavHost="true" />
-
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"

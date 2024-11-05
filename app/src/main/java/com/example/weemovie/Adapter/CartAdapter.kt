@@ -34,7 +34,7 @@ class CartAdapter(
             // Carrega imagem do produto com Picasso
             Picasso.get().load(product.image).into(productImage)
 
-            // Preenche título e subtotal do produto
+            // Preenche título
             productTitle.text = product.title
             dateAdded.text = "Adicionado em ${getCurrentDate()}"
             quantityText.text = quantity.toString()
@@ -49,7 +49,7 @@ class CartAdapter(
                 if (quantity > 1) {
                     onQuantityChanged(product, quantity - 1)
                 } else {
-                    onQuantityChanged(product, 0)  // Remove do carrinho
+                    onQuantityChanged(product, 0)
                 }
             }
         }

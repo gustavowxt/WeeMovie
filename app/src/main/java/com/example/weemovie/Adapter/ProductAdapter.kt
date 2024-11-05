@@ -15,9 +15,9 @@ import com.squareup.picasso.Picasso
 
 class ProductAdapter(
     private var products: List<Product>,
-    private val onProductToggle: (Product) -> Boolean,       // Alterna o produto no carrinho
-    private val isProductInCart: (Product) -> Boolean,       // Verifica se o produto está no carrinho
-    private val getProductQuantity: (Product) -> Int         // Obtém a quantidade do produto no carrinho
+    private val onProductToggle: (Product) -> Boolean,       // Alterna o filme no carrinho
+    private val isProductInCart: (Product) -> Boolean,       // Verifica se o filme está no carrinho
+    private val getProductQuantity: (Product) -> Int         // A quantidade do filme no carrinho
 ) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     inner class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
