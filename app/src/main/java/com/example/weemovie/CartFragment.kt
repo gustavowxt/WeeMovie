@@ -35,16 +35,16 @@ class CartFragment : Fragment() {
         finalizeOrderButton = view.findViewById(R.id.finalizeOrderButton)
         totalTextView = view.findViewById(R.id.totalTextView)
 
-        // Inicia o adapter com uma lista vazia (será preenchida ao observar o ViewModel)
+        // Inicia o adapter com os itens do carrinho observando o ViewModel
         cartAdapter = CartAdapter(mutableListOf()) { product, _ ->
-            cartViewModel.toggleCartProduct(product)  // Altera o estado do produto no carrinho ao remover
+            cartViewModel.updateCart(product)  // Atualiza o carrinho ao remover um item
             updateTotal()
         }
         recyclerView.adapter = cartAdapter
 
         // Observa as mudanças nos itens do carrinho
         cartViewModel.cartItems.observe(viewLifecycleOwner) { cartItems ->
-            cartAdapter.updateCartItems(cartItems)  // Atualiza o adapter com os itens do carrinho
+            cartAdapter.updateCartItems(cartItems) // Atualiza o adapter com os itens e quantidades do carrinho
             updateTotal()  // Atualiza o total
         }
 

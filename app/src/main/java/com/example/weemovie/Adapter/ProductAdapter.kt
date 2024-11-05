@@ -6,8 +6,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weemovie.Product
 import com.example.weemovie.R
@@ -15,10 +13,10 @@ import com.squareup.picasso.Picasso
 
 class ProductAdapter(
     private var products: List<Product>,
-    private val onProductToggle: (Product) -> Unit,       // Alterna o produto no carrinho sem retorno
-    private val isProductInCart: (Product) -> Boolean,    // Verifica se o produto está no carrinho
-    private val getProductQuantity: (Product) -> Int      // Obtém a quantidade do produto no carrinho
+    private val onAddToCartClicked: (Product) -> Unit
 ) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+
+    private val cartCounts = mutableMapOf<Product, Int>()
 
     inner class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.productTitle)
@@ -31,39 +29,29 @@ class ProductAdapter(
             price.text = "R$ ${product.price}"
             Picasso.get().load(product.image).into(image)
 
-            // Define o estado inicial do botão com base no carrinho
-            val isAdded = isProductInCart(product)
-            updateButtonState(isAdded, getProductQuantity(product))
+            // Define o estado do botão com base na quantidade
+            val count = cartCounts[product] ?: 0
+            updateButtonState(count)
 
             addToCartButton.setOnClickListener {
-                // Chama o toggle sem retornar um valor
-                onProductToggle(product)
-
-                // Atualiza o estado do botão após a alteração no carrinho
-                val updatedIsAdded = isProductInCart(product)
-                updateButtonState(updatedIsAdded, getProductQuantity(product))
-
-                // Exibe a mensagem de feedback para o usuário
-                val message = if (updatedIsAdded) {
-                    "${product.title} adicionado ao carrinho"
-                } else {
-                    "${product.title} removido do carrinho"
-                }
-                Toast.makeText(itemView.context, message, Toast.LENGTH_SHORT).show()
+                val newCount = if (count == 0) 1 else 0
+                cartCounts[product] = newCount
+                onAddToCartClicked(product)
+                updateButtonState(newCount)
             }
         }
 
-        private fun updateButtonState(isAdded: Boolean, quantity: Int) {
-            if (isAdded) {
-                addToCartButton.text = "Adicionado ($quantity)"
-                addToCartButton.setBackgroundColor(
-                    ContextCompat.getColor(itemView.context, R.color.green)
-                )
+        private fun updateButtonState(count: Int) {
+            if (count > 0) {
+                addToCartButton.apply {
+                    text = "✓ Adicionado ($count)"
+                    setBackgroundColor(itemView.context.getColor(R.color.green))
+                }
             } else {
-                addToCartButton.text = "Adicionar ao carrinho"
-                addToCartButton.setBackgroundColor(
-                    ContextCompat.getColor(itemView.context, R.color.default_button_color)
-                )
+                addToCartButton.apply {
+                    text = "Adicionar ao Carrinho"
+                    setBackgroundColor(itemView.context.getColor(R.color.default_button_color))
+                }
             }
         }
     }
@@ -84,5 +72,4 @@ class ProductAdapter(
         notifyDataSetChanged()
     }
 }
-
 
