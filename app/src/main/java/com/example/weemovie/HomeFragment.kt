@@ -35,20 +35,13 @@ class HomeFragment : Fragment() {
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewProducts)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        productAdapter = ProductAdapter(products) { product ->
-            cartViewModel.updateCart(product)  // Atualiza o carrinho diretamente no ViewModel
+        productAdapter = ProductAdapter(
+            products,
+            onProductToggle = { product -> cartViewModel.toggleCartProduct(product) },
+            isProductInCart = { product -> cartViewModel.isProductInCart(product) },
+            getProductQuantity = { product -> cartViewModel.getProductQuantity(product) }
+        )
 
-            // Exibe uma mensagem de feedback ao usuário
-            Snackbar.make(
-                view,
-                if (cartViewModel.cartItems.value?.containsKey(product) == true) {
-                    "${product.title} adicionado ao carrinho"
-                } else {
-                    "${product.title} removido ao carrinho"
-                },
-                Snackbar.LENGTH_SHORT
-            ).show()
-        }
         recyclerView.adapter = productAdapter
 
         return view
