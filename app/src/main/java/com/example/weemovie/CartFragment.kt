@@ -16,48 +16,73 @@ import com.example.weemovie.ViewModel.CartViewModel
 
 class CartFragment : Fragment() {
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var cartAdapter: CartAdapter
     private lateinit var finalizeOrderButton: Button
     private lateinit var totalTextView: TextView
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var cartAdapter: CartAdapter
 
-    private val cartViewModel: CartViewModel by activityViewModels()  // ViewModel compartilhada
+    private val cartViewModel: CartViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Infla o layout do fragmento
         val view = inflater.inflate(R.layout.fragment_cart, container, false)
 
-        recyclerView = view.findViewById(R.id.recyclerViewCart)
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        // Inicializa as views
+        initializeViews(view)
 
-        finalizeOrderButton = view.findViewById(R.id.finalizeOrderButton)
-        totalTextView = view.findViewById(R.id.totalTextView)
+        // Configura o RecyclerView e o Adapter e passa a view inflada como parâmetro
+        setupRecyclerView(view)
 
-        // Inicia o adapter com uma lista vazia (será preenchida ao observar o ViewModel)
-        cartAdapter = CartAdapter(mutableListOf()) { product, _ ->
-            cartViewModel.toggleCartProduct(product)  // Altera o estado do produto no carrinho ao remover
-            updateTotal()
-        }
-        recyclerView.adapter = cartAdapter
+        // Observa as mudanças no carrinho para atualizar a interface
+        observeCartItems()
 
-        // Observa as mudanças nos itens do carrinho
-        cartViewModel.cartItems.observe(viewLifecycleOwner) { cartItems ->
-            cartAdapter.updateCartItems(cartItems)  // Atualiza o adapter com os itens do carrinho
-            updateTotal()  // Atualiza o total
-        }
-
-        finalizeOrderButton.setOnClickListener {
-            val intent = Intent(activity, OrderConfirmationActivity::class.java)
-            startActivity(intent)
-        }
+        // Responsável da finalização do pedido
+        setupFinalizeOrderButton()
 
         return view
     }
 
-    private fun updateTotal() {
-        val total = cartAdapter.getTotalPrice()
-        totalTextView.text = "R$ %.2f".format(total)
+    private fun initializeViews(view: View) {
+        finalizeOrderButton = view.findViewById(R.id.finalizeOrderButton)
+        totalTextView = view.findViewById(R.id.totalPriceText)
+    }
+
+    // Adiciona view como parâmetro
+    private fun setupRecyclerView(view: View) {
+        recyclerView = view.findViewById(R.id.recyclerViewCart)
+
+        // Passa uma função lambda que utiliza o cartViewModel para manipular a quantidade de produtos
+        cartAdapter = CartAdapter(mutableListOf()) { product, newQuantity ->
+            cartViewModel.updateProductQuantity(product, newQuantity)
+            updateTotalPrice()  // Atualiza o total quando a quantidade é alterada
+        }
+
+        recyclerView.apply {
+            adapter = cartAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
+    }
+
+    private fun observeCartItems() {
+        cartViewModel.cartItems.observe(viewLifecycleOwner) { cartItems ->
+            cartAdapter.updateCartItems(cartItems.toList())
+            updateTotalPrice()
+        }
+    }
+
+    private fun setupFinalizeOrderButton() {
+        finalizeOrderButton.setOnClickListener {
+            // Inicia a tela de confirmação de pedido
+            val intent = Intent(activity, OrderConfirmationActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun updateTotalPrice() {
+        val total = cartViewModel.getTotalPrice()
+        totalTextView.text = "TOTAL R$ %.2f".format(total)
     }
 }

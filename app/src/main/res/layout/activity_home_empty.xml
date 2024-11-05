@@ -16,7 +16,7 @@
         android:id="@+id/empty_state_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Parece que não há nada por aqui :("
+        android:text="@string/parece_que_nao_ha_nada_por_aqui"
         android:textColor="#000000"
         android:textSize="18sp"
         android:layout_below="@id/empty_state_image"
@@ -27,7 +27,7 @@
         android:id="@+id/reload_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Recarregar página"
+        android:text="@string/recarregar_pagina"
         android:layout_below="@id/empty_state_text"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp" />

@@ -9,7 +9,7 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mais Vendidos"
+        android:text="@string/mais_vendidos"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -17,7 +17,7 @@
         android:id="@+id/tvSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Maiores sucessos do WeMovies"
+        android:text="@string/maiores_sucessos_do_wemovies"
         android:textSize="16sp"
         android:textColor="#777777"
         android:layout_marginBottom="16dp" />

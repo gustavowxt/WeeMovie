@@ -9,7 +9,7 @@
         android:id="@+id/confirmationMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pedido Confirmado!"
+        android:text="@string/pedido_confirmado"
         android:textSize="24sp"
         android:layout_centerInParent="true" />
 
@@ -17,7 +17,7 @@
         android:id="@+id/backHomeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Voltar para Home"
+        android:text="@string/voltar_para_home"
         android:layout_below="@id/confirmationMessage"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"/>

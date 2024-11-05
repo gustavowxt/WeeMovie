@@ -1,4 +1,31 @@
 <resources>
     <string name="app_name">WEE MOVIE</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="seu_carrinho_vazio">Seu carrinho está vazio. Volte à loja para adicionar itens.</string>
+    <string name="confirmar_pedido">Confirmar Pedido</string>
+    <string name="total_reais">Total: R$ 0.00</string>
+    <string name="pedido_confirmado">Pedido Confirmado!</string>
+    <string name="voltar_para_home">Voltar para Home</string>
+    <string name="parece_que_nao_ha_nada_por_aqui">Parece que não há nada por aqui :(</string>
+    <string name="recarregar_pagina">Recarregar página</string>
+    <string name="carregando">Carregando...</string>
+    <string name="compra_realizada_com_sucesso">Compra Realizada com Sucesso!</string>
+    <string name="voltar_para_home_orderConfirmation">Voltar para Home</string>
+    <string name="bem_vindo">Bem vindo a</string>
+    <string name="wemovies">WeMovies</string>
+    <string name="carrinho_de_compras">Carrinho de compras</string>
+    <string name="total_reais_cart">TOTAL R$ 0,00</string>
+    <string name="button_finalizar_pedido">FINALIZAR PEDIDO</string>
+    <string name="mais_vendidos">Mais Vendidos</string>
+    <string name="maiores_sucessos_do_wemovies">Maiores sucessos do WeMovies</string>
+    <string name="perfil_usuario">Perfil do Usuário</string>
+    <string name="adicionado_data">Adicionado em 14/06/2024</string>
+    <string name="hifen">-</string>
+    <string name="numero_quantidade">1</string>
+    <string name="acrescentar">+</string>
+    <string name="remover">Remover</string>
+    <string name="adicionar_ao_carrinho">Adicionar ao carrinho</string>
+    <string name="home_nav">Home</string>
+    <string name="carrinho_nav">Carrinho</string>
+    <string name="perfil_nav">Perfil</string>
 </resources>

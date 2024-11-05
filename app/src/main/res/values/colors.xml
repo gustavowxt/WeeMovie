@@ -10,4 +10,6 @@
     <color name="green">#4CAF50</color>
     <color name="blue">#00BCD4</color>
     <color name="default_button_color">#673AB7</color>
+    <color name="darkGray">#0xFFA9A9A9</color>
+    <color name="lightGray">#0xFFD3D3D3</color>
 </resources>

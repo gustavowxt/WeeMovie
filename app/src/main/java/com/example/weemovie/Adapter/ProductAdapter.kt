@@ -43,7 +43,7 @@ class ProductAdapter(
                 val updatedIsAdded = isProductInCart(product)
                 updateButtonState(updatedIsAdded, getProductQuantity(product))
 
-                // Exibe a mensagem de feedback para o usuário
+                // Exibe a mensagem de adicionado ou removido para o usuário
                 val message = if (updatedIsAdded) {
                     "${product.title} adicionado ao carrinho"
                 } else {

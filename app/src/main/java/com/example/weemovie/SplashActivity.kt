@@ -12,10 +12,9 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        // Aguarda um curto período para exibir a Splash Screen e inicia a LoadingActivity
         Handler(Looper.getMainLooper()).postDelayed({
             startActivity(Intent(this, LoadingActivity::class.java))
-            finish() // Fecha a SplashActivity
-        }, 2000) // Aguarda 2 segundos, ajuste conforme necessário
+            finish()
+        }, 2000)
     }
 }

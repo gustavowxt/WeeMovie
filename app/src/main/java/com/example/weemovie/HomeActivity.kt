@@ -34,13 +34,13 @@ class HomeActivity : AppCompatActivity() {
         menuItem.title = "Carrinho ($count)"
     }
 
-    // Adiciona um item ao carrinho e exibe feedback
+    // Adiciona um item ao carrinho e exibe
     fun addToCart(product: Product) {
         if (!cartItems.contains(product)) {
             cartItems.add(product)
             updateCartBadge(cartItems.size) // Atualiza o contador do carrinho
 
-            // Exibe mensagem de feedback para o usuário
+            // Exibe mensagem de adicionado para o usuário
             Snackbar.make(
                 findViewById(android.R.id.content),
                 "${product.title} adicionado ao carrinho!",

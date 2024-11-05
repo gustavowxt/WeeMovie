@@ -12,10 +12,10 @@ class LoadingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loading)
 
-        // Simula o carregamento de dados com um atraso e, em seguida, inicia a MainActivity
+        // Simula o carregamento de dados com um atraso e em seguida, inicia a activity
         Handler(Looper.getMainLooper()).postDelayed({
             startActivity(Intent(this, MainActivity::class.java))
-            finish() // Fecha a LoadingActivity
-        }, 3000) // Aguarda 3 segundos para simular o carregamento, ajuste conforme necessário
+            finish()
+        }, 3000)
     }
 }
